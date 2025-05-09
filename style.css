@@ -28,7 +28,6 @@ body {
         background-position: 0% 50%;
     }
 }
-
 .container {
     max-width: 500px;
     width: 100%;
@@ -36,21 +35,25 @@ body {
     padding: 40px 30px;
     
     /* Glass base */
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     
-    /* 3D glass edges */
+    /* Glass edges */
     border: 1px solid rgba(255, 255, 255, 0.2);
     box-shadow:
         0 4px 30px rgba(0, 0, 0, 0.1),
         inset 2px 2px 3px rgba(255, 255, 255, 0.1),
         inset -2px -2px 3px rgba(0, 0, 0, 0.1);
     
-    /* 3D depth effect */
-    position: relative;
-    overflow: hidden;
+    /* Animation */
+    animation: 
+        glassEntrance 0.8s ease-out,
+        glassFloat 8s ease-in-out infinite alternate;
+    
+    /* 3D effect */
     transform-style: preserve-3d;
+    perspective: 1000px;
 }
 
 /* Glass reflection effect */
@@ -71,12 +74,49 @@ body {
     );
     transform: rotate(30deg);
     animation: glassReflection 8s infinite ease-in-out;
+    pointer-events: none;
+}
+
+/* Keyframes */
+@keyframes glassEntrance {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes glassFloat {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
 }
 
 @keyframes glassReflection {
-    0%, 100% { transform: rotate(30deg) translate(-30%, -30%); }
-    50% { transform: rotate(30deg) translate(30%, 30%); }
+    0%, 100% {
+        transform: rotate(30deg) translate(-30%, -30%);
+    }
+    50% {
+        transform: rotate(30deg) translate(30%, 30%);
+    }
 }
+
+/* Hover effect */
+.container:hover {
+    transform: translateY(-4px);
+    box-shadow:
+        0 6px 40px rgba(0, 0, 0, 0.15),
+        inset 3px 3px 5px rgba(255, 255, 255, 0.15),
+        inset -3px -3px 5px rgba(0, 0, 0, 0.1);
+}
+
+
 .container h1{
     font-weight: bold;
     margin-bottom: 36px;
